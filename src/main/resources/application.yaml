@@ -1,0 +1,25 @@
+spring:
+  # 1. Configuraci�n de la Fuente de Datos (PostgreSQL)
+  datasource:
+    url: jdbc:postgresql://localhost:5432/taskmanager_db
+    username: postgres
+    password: mysecretpassword
+    driver-class-name: org.postgresql.Driver
+
+  # 2. Configuraci�n de JPA/Hibernate
+  jpa:
+    show-sql: true                 # Mostrar las consultas SQL en consola
+    hibernate:
+      ddl-auto: update             # Actualiza la base de datos sin borrar datos
+    properties:
+      hibernate:
+        format_sql: true           # Formatea el SQL para que sea legible
+
+  security:
+     enabled: false
+
+# 3. Configuraci�n de Logging
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql.BasicExtractor: trace
