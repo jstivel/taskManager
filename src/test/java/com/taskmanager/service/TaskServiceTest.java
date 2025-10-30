@@ -162,17 +162,20 @@ class TaskServiceTest {
 
         // 1. GIVEN (MOCKS)
         // Simular que la tarea original es ENCONTRADA
-        Mockito.when(taskRepository.findById(id)).thenReturn(java.util.Optional.of(entity));
+        //Mockito.when(taskRepository.findById(id)).thenReturn(java.util.Optional.of(entity));
+        Mockito.when(taskRepository.existsById(id)).thenReturn(true);
 
         // 2. WHEN (EXECUTION)
         taskService.deleteTask(id);
 
         // 3. THEN (VERIFY)
         // Verificar que se llamó a findById(id)
-        Mockito.verify(taskRepository, Mockito.times(1)).findById(id);
+        //Mockito.verify(taskRepository, Mockito.times(1)).findById(id);
+        Mockito.verify(taskRepository, Mockito.times(1)).existsById(id);
 
         // VERIFICAR: Comprueba que el método delete fue llamado con la entidad
-        Mockito.verify( taskRepository, Mockito.times(1)).delete(entity);
+        //Mockito.verify( taskRepository, Mockito.times(1)).delete(entity);
+        Mockito.verify(taskRepository, Mockito.times(1)).deleteById(id);
     }
 
     @Test
@@ -182,7 +185,8 @@ class TaskServiceTest {
 
         // 1. GIVEN (MOCKS)
         // Simular que la tarea no fue encontrada
-        Mockito.when(taskRepository.findById(id)).thenReturn(java.util.Optional.empty());
+        //Mockito.when(taskRepository.findById(id)).thenReturn(java.util.Optional.empty());
+        Mockito.when(taskRepository.existsById(id)).thenReturn(false);
 
         // 2. WHEN (EXECUTION)
         Assertions.assertThrows(
@@ -194,6 +198,7 @@ class TaskServiceTest {
         // 3. THEN (VERIFY)
         // Verificar que se llamó a findById(id)
         Mockito.verify(taskRepository, Mockito.times(1)).findById(id);
+        Mockito.verify(taskRepository, Mockito.never()).deleteById(id);
 
     }
 
